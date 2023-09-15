@@ -6,6 +6,12 @@ This repository contains code for running a giraffe keypoint detection model. Th
 
 ![project overview](images/main.png =800x)
 
+<p align="center">
+    <img src="images/main.png" width="800"/><br/>
+    <b>Figure 1.</b> Giraffe keypoint detection result.
+</p>
+
+
 
 ## Setup
 
