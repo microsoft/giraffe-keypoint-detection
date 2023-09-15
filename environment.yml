@@ -1,0 +1,17 @@
+name: giraffes
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pip:
+    - matplotlib
+    - numpy
+    - onnx
+    - onnxruntime
+    - pandas
+    - pillow
+    - pyinstaller
+    - torch
+    - torchvision
+    - tqdm

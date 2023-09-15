@@ -1,0 +1,14 @@
+name: giraffesdist
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pip:
+    - matplotlib
+    - numpy
+    - onnxruntime
+    - pandas
+    - pillow
+    - pyinstaller
+    - tqdm
