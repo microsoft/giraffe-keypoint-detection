@@ -4,13 +4,10 @@
 
 This repository contains code for running a giraffe keypoint detection model. The model estimates 4 keypoint locations in images containing a single giraffe, namely: top of ossicone, top of head, neck indent, and front bottom hoof. This model was trained using the [WNI Giraffes](https://lila.science/datasets/wni-giraffes) datasets on [LILA.science](https://lila.science/). The model inference script is set up to process a directory of images at a time and generate a summary CSV file containing the keypoint locations for each input image, as well as a mirror directory that contains the keypoints overlaid on downscaled versions of each image in the input directory.
 
-![project overview](images/main.png =800x)
-
 <p align="center">
     <img src="images/main.png" width="800"/><br/>
     <b>Figure 1.</b> Giraffe keypoint detection result.
 </p>
-
 
 
 ## Setup
