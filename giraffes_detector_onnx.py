@@ -45,9 +45,10 @@ def scale_up_keypoints(image_path, keypoints):
     return img_size, keypoints
 
 
-def transform_image(path):
+def transform_image(path, rotation=0):
     image = Image.open(path)
     image = image.resize((300, 200))  # width, height format
+    image = image.rotate(rotation)
     image = np.array(image, copy=True)
 
     # pad image to 300x300
@@ -68,8 +69,9 @@ def calculate_distance(x1, y1, x2, y2):
     return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
 
 
-def save_image_with_keypoints(image_path, keypoints, output_filename):
+def save_image_with_keypoints(image_path, keypoints, rotation, output_filename):
     image_orig = Image.open(image_path)
+    image_orig = image_orig.rotate(rotation)
     image_orig = np.array(image_orig)
     keypoints = np.array(keypoints)
 
@@ -82,7 +84,7 @@ def save_image_with_keypoints(image_path, keypoints, output_filename):
     plt.close()
 
 
-def make_inferences(model_fn, input_images, output_images, output_csv):
+def make_inferences(model_fn, rotation, input_images, output_images, output_csv):
     ort_session = onnxruntime.InferenceSession(model_fn)
 
     image_files = [
@@ -104,7 +106,7 @@ def make_inferences(model_fn, input_images, output_images, output_csv):
     no_data = []
     for i, image_file in tqdm(enumerate(image_files), total=len(image_files)):
         image_path = os.path.join(input_images, image_file)
-        image = transform_image(image_path)
+        image = transform_image(image_path, rotation)
 
         ort_inputs = {ort_session.get_inputs()[0].name: image[np.newaxis, ...]}
         ort_outs = ort_session.run(None, ort_inputs)
@@ -168,12 +170,12 @@ def make_inferences(model_fn, input_images, output_images, output_csv):
         keypoints = df["keypoints"][index]
         output_filename = os.path.join(output_images, f"{id}.jpg")
 
-        save_image_with_keypoints(image_path, keypoints, output_filename)
+        save_image_with_keypoints(image_path, keypoints, rotation, output_filename)
 
 
 def main():
     # Create an ArgumentParser object
-    parser = argparse.ArgumentParser(description="Giraffe Finder")
+    parser = argparse.ArgumentParser(description="Giraffe keypoint detection script")
 
     parser.add_argument(
         "--input_directory",
@@ -209,6 +211,20 @@ def main():
         action="store_true",
         help="Whether to overwrite the output files if they already exist",
     )
+
+    group = parser.add_mutually_exclusive_group(required=False)
+    group.add_argument(
+        "--counter_clockwise",
+        action="store_true",
+        help="Whether to rotate the images 90 degrees counter-clockwise.",
+    )
+    group.add_argument(
+        "--clockwise",
+        action="store_true",
+        help="Whether to rotate the images 90 degrees clockwise.",
+    )
+
+
     args = parser.parse_args()
 
     # Set the output CSV filename
@@ -247,9 +263,15 @@ def main():
     if not os.path.exists(os.path.dirname(output_csv_fn)):
         os.makedirs(os.path.dirname(output_csv_fn), exist_ok=True)
 
+    rotation = 0
+    if args.counter_clockwise:
+        rotation = 90
+    elif args.clockwise:
+        rotation = -90
+
     # Call the function with for key-points predictions
     make_inferences(
-        args.model_fn, args.input_directory, args.output_directory, output_csv_fn
+        args.model_fn, rotation, args.input_directory, args.output_directory, output_csv_fn
     )
 
 
