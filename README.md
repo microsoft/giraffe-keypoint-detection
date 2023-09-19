@@ -71,4 +71,4 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 This project is licensed under the [MIT License](LICENSE).
 
-The two example image files in `data/` are part of the [WNI Giraffes](https://lila.science/datasets/wni-giraffes) dataset and are licensed under the [Community Data License Agreement (permissive variant)](https://cdla.dev/permissive-1-0/) license.
+The example image files in `data/` are part of the [WNI Giraffes](https://lila.science/datasets/wni-giraffes) dataset and are licensed under the [Community Data License Agreement (permissive variant)](https://cdla.dev/permissive-1-0/) license.
