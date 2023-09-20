@@ -48,7 +48,7 @@ def scale_up_keypoints(image_path, keypoints):
 def transform_image(path, rotation=0):
     image = Image.open(path)
     image = image.resize((300, 200))  # width, height format
-    image = image.rotate(rotation)
+    image = image.rotate(rotation, expand=True)
     image = np.array(image, copy=True)
 
     # pad image to 300x300
@@ -71,7 +71,7 @@ def calculate_distance(x1, y1, x2, y2):
 
 def save_image_with_keypoints(image_path, keypoints, rotation, output_filename):
     image_orig = Image.open(image_path)
-    image_orig = image_orig.rotate(rotation)
+    image_orig = image_orig.rotate(rotation, expand=True)
     image_orig = np.array(image_orig)
     keypoints = np.array(keypoints)
 
