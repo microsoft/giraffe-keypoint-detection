@@ -22,7 +22,7 @@ conda activate giraffes
 
 Download the PyTorch file from [here](https://researchlabwuopendata.blob.core.windows.net/wni-giraffe-keypoint/keypoint_rcnn_resnet50_fpn_2.pth) and place it in the root directory of this repository, then run `python convert_pytorch_model_to_onnx.py` and/or download the pre-converted ONNX model file from [here](https://researchlabwuopendata.blob.core.windows.net/wni-giraffe-keypoint/keypoint_model_7_26_2023.onnx) and place it in the root directory of this repository.
 
-### Creating a Windows Executable
+### Creating a Windows executable
 
 On a Windows machine, run the following commands:
 
